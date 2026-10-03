@@ -43,6 +43,60 @@ sudo reboot
 
 ---
 
+## Flashing the Pre-Built Image (Direct Restore)
+
+If you have the pre-built compressed image (`rpitv-rpi1b-waveshare35a.img.xz`), you can flash it directly to any MicroSD card (8 GB or larger) to get an immediately working, plug-and-play system without manual setup.
+
+### 1. Identify Target SD Card Device on Linux
+
+Insert your MicroSD card into your Linux PC and identify its block device:
+
+```bash
+lsblk
+```
+
+Look for your SD card device name (e.g. `/dev/sda`, `/dev/sdb`, or `/dev/mmcblk0`).
+
+> [!WARNING]
+> Ensure you select the correct block device! Flashing to the wrong drive will overwrite your system or data drive. Do not specify a partition number (like `sda1`); specify the raw disk device (like `sda`).
+
+### 2. Flash Directly via Linux Terminal
+
+Stream the decompressed image directly to the target device using `xzcat` and `dd`:
+
+```bash
+# Replace /dev/sdX with your actual SD card device
+xzcat rpitv-rpi1b-waveshare35a.img.xz | sudo dd of=/dev/sdX bs=4M status=progress conv=fsync
+sync
+```
+
+*(Optional: If you have `pv` installed, you can monitor transfer rate and progress)*:
+```bash
+xzcat rpitv-rpi1b-waveshare35a.img.xz | pv -s 4350M | sudo dd of=/dev/sdX bs=4M conv=fsync
+sync
+```
+
+### 3. Expand the Root Filesystem to Full SD Card Capacity
+
+Because the image was shrunk to ~4.35 GB to minimize transfer time, expand partition 2 to fill your entire SD card:
+
+#### Option A: On your Linux PC before ejecting
+```bash
+echo "Yes" | sudo parted ---pretend-input-tty /dev/sdX resizepart 2 100%
+sudo e2fsck -fy /dev/sdX2
+sudo resize2fs /dev/sdX2
+```
+
+#### Option B: On the Raspberry Pi itself
+Boot the Pi with the flashed card, SSH in, and run:
+```bash
+sudo raspi-config
+# Select: Advanced Options -> Expand Filesystem
+sudo reboot
+```
+
+---
+
 ## Step-by-Step Manual Setup Guide
 
 If you prefer to configure the system manually from a fresh Raspberry Pi OS Lite installation, follow these steps:

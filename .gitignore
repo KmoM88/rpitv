@@ -1,6 +1,6 @@
-__pycache__/
-*.py[cod]
-*$py.class
-*.swp
-*.bak
-*~
+# Disk images and large archives
+*.img
+*.img.xz
+*.iso
+*.tar.xz
+*.bin
