@@ -1,0 +1,16 @@
+[Unit]
+Description=RPi TV Video Player
+After=local-fs.target
+
+[Service]
+Type=simple
+User=root
+ExecStart=/usr/local/bin/rpi-tv-player.py
+Restart=always
+RestartSec=3
+Environment=PYTHONUNBUFFERED=1
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
