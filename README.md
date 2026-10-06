@@ -176,8 +176,8 @@ arm_boost=1
 gpu_mem=128
 
 # Waveshare 3.5inch 480x320 LCD (A) v3
-# rotate=270 is landscape rotated 180 degrees from default 90
-dtoverlay=waveshare35a:rotate=270:speed=24000000
+# rotate=90 (standard landscape) or rotate=270 (180° inverted landscape)
+dtoverlay=waveshare35a:rotate=90:speed=24000000
 
 # Video timing configuration for 480x320
 hdmi_force_hotplug=1

@@ -51,8 +51,8 @@ disable_overscan=1
 arm_boost=1
 gpu_mem=128
 
-# Waveshare 3.5inch 480x320 LCD (A) v3
-dtoverlay=waveshare35a:rotate=270:speed=24000000
+# Waveshare 3.5inch 480x320 LCD (A) v3 (rotate=90 or rotate=270 for 180° inversion)
+dtoverlay=waveshare35a:rotate=90:speed=24000000
 
 # Video timing configuration for 480x320
 hdmi_force_hotplug=1
